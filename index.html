@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Seismic Crush</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app-container">
+        <div id="home-screen" class="screen active liquid-panel">
+            <h1 class="glow-text">Seismic Crush</h1>
+            <div class="input-group">
+                <input type="text" id="username-input" placeholder="Enter Discord Username" autocomplete="off">
+            </div>
+            <button id="start-btn" class="glass-btn">Start Game</button>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen">
+            <div class="top-bar liquid-panel">
+                <div class="stats">
+                    <div class="stat-box">
+                        <span class="stat-label">Level</span>
+                        <span id="level-display" class="stat-value">1</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Score</span>
+                        <span id="score-display" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Moves</span>
+                        <span id="moves-display" class="stat-value">20</span>
+                    </div>
+                </div>
+                <button id="settings-btn" class="icon-btn glass-btn">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="board-container liquid-panel">
+                <div id="game-board"></div>
+            </div>
+
+            <div class="target-info liquid-panel">
+                <p>Target Score: <span id="target-score">100</span></p>
+                <p>Player: <span id="player-name-display">Guest</span></p>
+            </div>
+        </div>
+
+        <!-- Overlays -->
+        <div id="modal-overlay" class="overlay hidden">
+            <!-- Settings Modal -->
+            <div id="settings-modal" class="modal liquid-panel hidden">
+                <h2>Paused</h2>
+                <button id="resume-btn" class="glass-btn">Resume</button>
+                <button id="home-return-btn" class="glass-btn danger">Quit to Home</button>
+            </div>
+
+            <!-- Level Complete Modal -->
+            <div id="level-complete-modal" class="modal liquid-panel hidden">
+                <h2 class="glow-text success">Level Complete!</h2>
+                <p>Score: <span id="final-score-win">0</span></p>
+                <button id="next-level-btn" class="glass-btn primary">Next Level</button>
+            </div>
+
+            <!-- Game Over Modal -->
+            <div id="game-over-modal" class="modal liquid-panel hidden">
+                <h2 class="glow-text danger">Out of Moves</h2>
+                <p>Target: <span id="failed-target">0</span></p>
+                <button id="retry-btn" class="glass-btn">Retry Level</button>
+                <button id="quit-btn" class="glass-btn danger">Home</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
