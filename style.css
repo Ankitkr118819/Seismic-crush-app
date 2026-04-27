@@ -1,7 +1,7 @@
 :root {
     --primary-color: rgba(255, 255, 255, 0.7);
-    --bg-gradient-start: #74ebd5;
-    --bg-gradient-end: #acb6e5;
+    --bg-gradient-start: #e6d5b8;
+    --bg-gradient-end: #c2a370;
     --glass-bg: rgba(255, 255, 255, 0.2);
     --glass-border: rgba(255, 255, 255, 0.5);
     --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
