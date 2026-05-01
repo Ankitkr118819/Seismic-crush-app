@@ -76,6 +76,31 @@ document.addEventListener('DOMContentLoaded', () => {
                     provider = new ethers.BrowserProvider(window.ethereum);
                     // Request account access
                     await provider.send("eth_requestAccounts", []);
+                    
+                    // Switch to Base Mainnet
+                    try {
+                        await provider.send('wallet_switchEthereumChain', [{ chainId: '0x2105' }]);
+                    } catch (switchError) {
+                        // This error code indicates that the chain has not been added to MetaMask.
+                        if (switchError.code === 4902) {
+                            try {
+                                await provider.send('wallet_addEthereumChain', [
+                                    {
+                                        chainId: '0x2105',
+                                        chainName: 'Base',
+                                        rpcUrls: ['https://mainnet.base.org'],
+                                        nativeCurrency: { name: 'Ethereum', symbol: 'ETH', decimals: 18 },
+                                        blockExplorerUrls: ['https://basescan.org']
+                                    }
+                                ]);
+                            } catch (addError) {
+                                console.error('Error adding Base network:', addError);
+                            }
+                        } else {
+                            console.error('Error switching to Base network:', switchError);
+                        }
+                    }
+
                     signer = await provider.getSigner();
                     userAddress = await signer.getAddress();
                     
