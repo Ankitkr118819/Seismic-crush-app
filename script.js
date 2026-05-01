@@ -24,6 +24,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const usernameInput = document.getElementById('username-input');
     const startBtn = document.getElementById('start-btn');
     
+    // Web3 Elements
+    const connectWalletBtn = document.getElementById('connect-wallet-btn');
+    const sendTxBtn = document.getElementById('send-tx-btn');
+    const walletStatus = document.getElementById('wallet-status');
+    
+    let provider;
+    let signer;
+    let userAddress;
+    
     // Modals
     const modalOverlay = document.getElementById('modal-overlay');
     const settingsModal = document.getElementById('settings-modal');
@@ -49,6 +58,79 @@ document.addEventListener('DOMContentLoaded', () => {
     let replacedTile;
     let dragStartX, dragStartY;
     
+    // --- Web3 Integration ---
+    const BASE_BUILDER_CODE = "bc_3xzi5e5s";
+    
+    // Hex encode the builder code
+    function getEncodedBuilderCode() {
+        if (typeof ethers !== 'undefined') {
+            return ethers.hexlify(ethers.toUtf8Bytes(BASE_BUILDER_CODE));
+        }
+        return "0x";
+    }
+
+    if (connectWalletBtn) {
+        connectWalletBtn.addEventListener('click', async () => {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    provider = new ethers.BrowserProvider(window.ethereum);
+                    // Request account access
+                    await provider.send("eth_requestAccounts", []);
+                    signer = await provider.getSigner();
+                    userAddress = await signer.getAddress();
+                    
+                    walletStatus.textContent = `Connected: ${userAddress.substring(0, 6)}...${userAddress.substring(38)}`;
+                    walletStatus.style.color = "#4CAF50";
+                    connectWalletBtn.classList.add('hidden');
+                    sendTxBtn.classList.remove('hidden');
+                    sendTxBtn.style.display = "block";
+                    
+                } catch (error) {
+                    console.error("User denied account access or error occurred", error);
+                    walletStatus.textContent = "Connection failed";
+                    walletStatus.style.color = "#F44336";
+                }
+            } else {
+                walletStatus.textContent = "Please install MetaMask or Coinbase Wallet";
+            }
+        });
+    }
+
+    if (sendTxBtn) {
+        sendTxBtn.addEventListener('click', async () => {
+            if (!signer) return;
+            
+            try {
+                sendTxBtn.disabled = true;
+                sendTxBtn.textContent = "Sending...";
+                
+                const dataHex = getEncodedBuilderCode();
+                
+                // Construct the transaction
+                const tx = {
+                    to: userAddress, // Send 0 ETH to themselves
+                    value: 0,
+                    data: dataHex // Append builder code
+                };
+                
+                // Send the transaction
+                const txResponse = await signer.sendTransaction(tx);
+                walletStatus.textContent = `Tx Sent: ${txResponse.hash.substring(0, 8)}...`;
+                
+                // Wait for confirmation
+                await txResponse.wait();
+                walletStatus.textContent = "Transaction Confirmed!";
+                
+            } catch (error) {
+                console.error("Transaction failed", error);
+                walletStatus.textContent = "Transaction failed (Check Console)";
+            } finally {
+                sendTxBtn.disabled = false;
+                sendTxBtn.textContent = "Send Test Tx (Base)";
+            }
+        });
+    }
+
     // --- Initialization ---
     
     startBtn.addEventListener('click', () => {

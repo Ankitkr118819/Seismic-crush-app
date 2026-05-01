@@ -358,3 +358,26 @@ input[type="text"]:focus {
     50% { transform: scale(1.2) rotate(45deg); opacity: 1; }
     100% { transform: scale(0) rotate(90deg); opacity: 0; }
 }
+
+/* Web3 Styles */
+.web3-container {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.wallet-status {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: rgba(0, 0, 0, 0.7);
+    word-break: break-all;
+}
+
+.glass-btn.secondary { background: rgba(33, 150, 243, 0.6); }
+
+.hidden {
+    display: none !important;
+}

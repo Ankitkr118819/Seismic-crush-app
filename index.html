@@ -16,6 +16,12 @@
                 <input type="text" id="username-input" placeholder="Enter Discord Username" autocomplete="off">
             </div>
             <button id="start-btn" class="glass-btn">Start Game</button>
+            
+            <div class="web3-container">
+                <button id="connect-wallet-btn" class="glass-btn secondary">Connect Wallet</button>
+                <button id="send-tx-btn" class="glass-btn hidden" style="display: none;">Send Test Tx (Base)</button>
+                <p id="wallet-status" class="wallet-status">Not connected</p>
+            </div>
         </div>
 
         <!-- Game Screen -->
@@ -79,6 +85,7 @@
         </div>
     </div>
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.11.1/ethers.umd.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
